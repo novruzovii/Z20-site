@@ -4,159 +4,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Z20.com</title>
+    <title>Zamir | Novruzovi</title>
 
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter', sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            background: #0d0d0f;
             color: white;
             overflow-x: hidden;
         }
 
+        /* Smooth background gradient */
+        body::before {
+            content: "";
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 30%, #1f1f24, transparent 40%),
+                radial-gradient(circle at 70% 70%, #141418, transparent 40%);
+            z-index: -2;
+            animation: moveBg 15s linear infinite;
+        }
+
+        @keyframes moveBg {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Navbar */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 25px 8%;
+            padding: 30px 8%;
         }
 
         .logo {
-            font-size: 28px;
-            font-weight: 700;
+            font-weight: 800;
+            font-size: 24px;
             letter-spacing: 2px;
-            animation: fadeIn 1.5s ease-in-out;
-        }
-
-        .logo span {
-            color: #00f7ff;
         }
 
         nav a {
-            color: white;
+            color: #aaa;
             text-decoration: none;
-            margin-left: 25px;
-            font-weight: 400;
+            margin-left: 30px;
             transition: 0.3s;
         }
 
         nav a:hover {
-            color: #00f7ff;
+            color: white;
         }
 
+        /* Hero */
         .hero {
-            height: 90vh;
+            height: 85vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            animation: fadeUp 1.5s ease-in-out;
+            animation: fadeIn 1.5s ease;
         }
 
         .hero h1 {
-            font-size: 50px;
-            margin-bottom: 15px;
+            font-size: 60px;
+            font-weight: 800;
+            background: linear-gradient(90deg, #ffffff, #888, #ffffff);
+            -webkit-background-clip: text;
+            color: transparent;
         }
 
         .hero p {
+            margin-top: 20px;
+            color: #aaa;
             font-size: 18px;
-            max-width: 600px;
-            opacity: 0.9;
         }
 
-        .btns {
-            margin-top: 30px;
-        }
-
-        .btn {
-            padding: 12px 25px;
-            border-radius: 30px;
-            border: none;
-            cursor: pointer;
-            margin: 10px;
-            font-weight: 600;
-            transition: 0.4s;
-        }
-
-        .btn-primary {
-            background: #00f7ff;
-            color: black;
-        }
-
-        .btn-primary:hover {
-            background: white;
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 2px solid #00f7ff;
-            color: #00f7ff;
-        }
-
-        .btn-outline:hover {
-            background: #00f7ff;
-            color: black;
-        }
-
+        /* 3D Card */
         .section {
-            padding: 80px 8%;
-            text-align: center;
+            padding: 100px 8%;
+            display: flex;
+            justify-content: center;
         }
 
         .card {
+            width: 700px;
             background: rgba(255, 255, 255, 0.05);
-            padding: 30px;
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            max-width: 700px;
-            margin: 40px auto;
-            transition: 0.4s;
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 50px;
+            transition: 0.2s;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
         }
 
-        .card:hover {
-            transform: translateY(-10px);
+        .card h2 {
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .card p {
+            color: #ccc;
+            line-height: 1.8;
+        }
+
+        /* Social Buttons */
+        .social {
+            text-align: center;
+            padding: 60px 0;
         }
 
         .social a {
             display: inline-block;
             margin: 15px;
-            font-size: 20px;
-            text-decoration: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #1a1a1f, #222);
             color: white;
+            text-decoration: none;
             transition: 0.3s;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
         }
 
         .social a:hover {
-            color: #00f7ff;
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
         }
 
+        /* Footer */
         footer {
             text-align: center;
             padding: 30px;
-            opacity: 0.7;
+            color: #666;
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes fadeUp {
             from {
                 opacity: 0;
                 transform: translateY(40px);
@@ -173,30 +172,24 @@
 <body>
 
     <header>
-        <div class="logo">Z<span>20</span></div>
+        <div class="logo">Z20</div>
         <nav>
-            <a href="#about">About Me</a>
-            <a href="#contact">Communication</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
         </nav>
     </header>
 
     <section class="hero">
-        <h1>Hello, I'm Zamir 👋</h1>
-        <p>I am a self-improving individual with a passion for technology and software. I enjoy creating modern projects
-            and designing.</p>
-        <div class="btns">
-            <button class="btn btn-primary" onclick="scrollToSection('about')">More Information</button>
-            <button class="btn btn-outline" onclick="scrollToSection('contact')">Communication</button>
-        </div>
+        <h1>Hello, I'm Zamir </h1>
+        <p>Developer • Creator • Future Engineer</p>
     </section>
 
     <section id="about" class="section">
-        <h2>About Me</h2>
-        <div class="card">
+        <div class="card" id="card">
+            <h2>About Me</h2>
             <p>
-                Buraya kendi kısa CV bilgini yazacaksın.
-                Örneğin:
-                <br><br>
+                • I'am 20 Years Old.
+                <br>
                 • University: Tbilisi State University (TSU)
                 <br>
                 • Faculty: Computer Science
@@ -208,22 +201,23 @@
         </div>
     </section>
 
-    <section id="contact" class="section">
-        <h2>Communication</h2>
-        <div class="social">
-            <a href="https://instagram.com/novruzovii_00" target="_blank">Instagram</a>
-            <a href="https://wa.me/+995568713613" target="_blank">WhatsApp</a>
-        </div>
+    <section id="contact" class="social">
+        <a href="https://instagram.com/novruzovii_00" target="_blank">Instagram</a>
+        <a href="https://wa.me/+995568713613" target="_blank">WhatsApp</a>
     </section>
 
     <footer>
-        © 2026 Z20.com | Tüm Hakları Saklıdır
+        © 2026 Zamir Novruzovi
     </footer>
 
     <script>
-        function scrollToSection(id) {
-            document.getElementById(id).scrollIntoView({ behavior: "smooth" });
-        }
+        const card = document.getElementById("card");
+
+        document.addEventListener("mousemove", (e) => {
+            let xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+            let yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+            card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+        });
     </script>
 
 </body>
