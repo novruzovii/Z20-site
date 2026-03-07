@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Z&S Fashion</title><head>
+    <title>Z&S Fashion</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -328,6 +328,81 @@
         .quantity-selector span {
             font-weight: bold;
         }
+
+        @media (max-width:768px) {
+
+            header {
+                padding: 15px 20px;
+            }
+
+            .logo {
+                font-size: 18px;
+            }
+
+            nav a {
+                font-size: 13px;
+                margin: 0 6px;
+            }
+
+            .container {
+                flex-direction: column;
+                padding: 15px;
+                gap: 20px;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            / TELEFONDA 2 ÜRÜN YAN YANA / .products {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            / FOTOĞRAFLARI KÜÇÜLT / .product img {
+                height: 180px;
+            }
+
+            .title {
+                font-size: 14px;
+            }
+
+            .price {
+                font-size: 16px;
+            }
+
+            .add-cart {
+                font-size: 12px;
+                padding: 6px 10px;
+            }
+
+            / SEPET TELEFONDA TAM EKRAN */ .cart {
+                width: 100%;
+                right: -100%;
+            }
+
+            .cart.active {
+                right: 0;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 30% auto;
+            }
+
+            .modal-content img {
+                width: 100%;
+            }
+
+            .contact {
+                margin: 20px;
+                padding: 20px;
+            }
+
+            .social-icons {
+                font-size: 24px;
+                gap: 15px;
+            }
     </style>
 </head>
 
@@ -504,6 +579,5 @@
     </script>
 
 </body>
-
 
 </html>
