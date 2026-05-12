@@ -1,13 +1,6 @@
-// Firebase Config
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  getDocs,
-  deleteDoc,
-  doc
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getStorage } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCIuX6OB6mnTMm684etZMV5Qz_CPatkufs",
@@ -15,15 +8,9 @@ const firebaseConfig = {
   projectId: "z-020-z",
   storageBucket: "z-020-z.firebasestorage.app",
   messagingSenderId: "173837203826",
-  appId: "1:173837203826:web:84de25fcb2874a7335c5eb",
-  measurementId: "G-CXVC79R3ZN"
+  appId: "1:173837203826:web:84de25fcb2874a7335c5eb"
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-export { db, collection, addDoc, getDocs, deleteDoc, doc };
-import { getStorage, ref, uploadBytes, getDownloadURL } 
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
-
-const storage = getStorage(app);
+export const app = initializeApp(firebaseConfig);
+export const db = getFirestore(app);
+export const storage = getStorage(app);
