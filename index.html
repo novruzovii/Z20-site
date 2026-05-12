@@ -394,7 +394,7 @@
         <div class="logo">Z&S FASHION</div>
         <div class="header-tools">
             <div class="search-box">
-                <input type="text" id="searchInput" placeholder="ძებნა..." oninput="searchProducts()">
+                <input type="file" id="imageFile" accept="image/*">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </div>
             <div class="icon-btn" onclick="toggleSidebar('fav-sidebar')">
@@ -494,14 +494,7 @@
     </footer>
 
     <script>
-        const productsData = [
-            { id: 1, category: 'კაბა', name: "საზაფხულო კაბა", price: 70, isNew: true, images: ["https://i.postimg.cc/Z53knVnd/l-20251-s5m547z8-cvl-79-59-92-175-a.webp", "https://i.postimg.cc/CLBXrmjr/l-20231-s3eq21z8-ke8-80-60-89-177-a1.webp"] },
-            { id: 2, category: 'ბლუზკა', name: "კლასიკური ბლუზკა", price: 30, isNew: false, images: ["https://i.postimg.cc/0Qv9Ph04/l-20252-w5ey03z8-j5e-86-61-90-179-a1.webp", "https://i.postimg.cc/0QzhgfLZ/l-20252-w5ct75z8-cvl-80-60-88-17-a.webp"] },
-            { id: 3, category: 'ჟაკეტი', name: "შავი ჟაკეტი", price: 55, isNew: true, images: ["https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=500"] },
-            { id: 4, category: 'კაბა', name: "წითელი კაბა", price: 85, isNew: false, images: ["https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=500"] },
-            { id: 5, category: 'ბლუზკა', name: "ელეგანტური ტოპი", price: 25, isNew: true, images: ["https://images.unsplash.com/photo-1534126416832-a88fdf2911c2?w=500"] },
-            { id: 6, category: 'ჟაკეტი', name: "ნაცრისფერი პალტო", price: 120, isNew: false, images: ["https://images.unsplash.com/photo-1539533757058-8d1b33b72554?w=500"] }
-        ];
+
 
         let cart = [];
         let favorites = [];
@@ -555,7 +548,6 @@
 
         // --- CART LOGIC ---
         function addToCart(id, specificImg = null) {
-            const product = productsData.find(p => p.id === id);
             const img = specificImg || product.images[0];
             const exists = cart.find(item => item.id === id && item.selectedImg === img);
 
@@ -667,7 +659,53 @@
         }
 
         // Başlangıç
-        renderProducts(productsData);
+
+    </script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import {
+            getFirestore,
+            collection,
+            getDocs
+        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCIuX6OB6mnTMm684etZMV5Qz_CPatkufs",
+            authDomain: "z-020-z.firebaseapp.com",
+            projectId: "z-020-z",
+            storageBucket: "z-020-z.firebasestorage.app",
+            messagingSenderId: "173837203826",
+            appId: "1:173837203826:web:84de25fcb2874a7335c5eb",
+            measurementId: "G-CXVC79R3ZN"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        let productsData = [];
+
+        async function loadProducts() {
+            const querySnapshot = await getDocs(collection(db, "products"));
+
+            productsData = [];
+
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+
+                productsData.push({
+                    id: doc.id,
+                    category: data.category,
+                    name: data.name,
+                    price: data.price,
+                    isNew: true,
+                    images: [data.image]
+                });
+            });
+
+            renderProducts(productsData);
+        }
+
+        window.onload = loadProducts;
     </script>
 </body>
 
