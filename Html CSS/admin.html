@@ -1,208 +1,49 @@
-```html
 <!DOCTYPE html>
-<html lang="tr">
-
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Z&S Admin Panel</title>
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f5f5f5;
-            padding: 30px;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: auto;
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-        }
-
-        h1 {
-            margin-bottom: 25px;
-        }
-
-        input,
-        select {
-            width: 100%;
-            padding: 14px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-        }
-
-        button {
-            background: black;
-            color: white;
-            border: none;
-            padding: 14px 20px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .products {
-            margin-top: 40px;
-            display: grid;
-            gap: 15px;
-        }
-
-        .product {
-            background: #fafafa;
-            border: 1px solid #eee;
-            padding: 15px;
-            border-radius: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        img {
-            width: 70px;
-            height: 70px;
-            object-fit: cover;
-            border-radius: 10px;
-        }
-
-        .left {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .delete-btn {
-            background: crimson;
-        }
-    </style>
+    <title>Admin Panel</title>
 </head>
-
 <body>
 
-    <div class="container">
-        <h1>Z&S Fashion Admin Panel</h1>
+<h2>Ürün Ekle</h2>
 
-        <input type="text" id="name" placeholder="Ürün Adı">
+<input id="name" placeholder="Ürün adı"><br><br>
+<input id="price" placeholder="Fiyat"><br><br>
+<input id="category" placeholder="Kategori"><br><br>
 
-        <input type="number" id="price" placeholder="Fiyat">
+<input type="file" id="image"><br><br>
 
-        <select id="category">
-            <option value="კაბა">Kıyafet</option>
-            <option value="ბლუზკა">Bluz</option>
-            <option value="ჟაკეტი">Ceket</option>
-        </select>
+<button onclick="addProduct()">Ekle</button>
 
-        <input type="file" id="imageFile" accept="image/*">
+<script type="module">
+import { db, storage } from "./firebase.js";
+import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
-        <button onclick="addProduct()">Ürün Ekle</button>
+async function addProduct() {
+    const name = document.getElementById("name").value;
+    const price = Number(document.getElementById("price").value);
+    const category = document.getElementById("category").value;
+    const file = document.getElementById("image").files[0];
 
-        <div class="products" id="products"></div>
-    </div>
+    if (!file) return alert("Foto seç!");
 
-    <script type="module">
-        import {
-            db,
-            collection,
-            addDoc,
-            getDocs,
-            deleteDoc,
-            doc
-        } from './firebase.js';
+    const storageRef = ref(storage, "products/" + file.name);
+    await uploadBytes(storageRef, file);
+    const imageUrl = await getDownloadURL(storageRef);
 
-        const productsDiv = document.getElementById('products');
+    await addDoc(collection(db, "products"), {
+        name,
+        price,
+        category,
+        image: imageUrl,
+        createdAt: Date.now()
+    });
 
-        async function loadProducts() {
-            productsDiv.innerHTML = "";
-
-            const querySnapshot = await getDocs(collection(db, "products"));
-
-            querySnapshot.forEach((docItem) => {
-                const data = docItem.data();
-
-                productsDiv.innerHTML += `
-      <div class="product">
-        <div class="left">
-          <img src="${data.image}">
-          <div>
-            <h3>${data.name}</h3>
-            <p>₾${data.price}</p>
-          </div>
-        </div>
-
-        <button class="delete-btn" onclick="removeProduct('${docItem.id}')">
-          Sil
-        </button>
-      </div>
-    `;
-            });
-        }
-
-        window.removeProduct = async (id) => {
-            await deleteDoc(doc(db, "products", id));
-            loadProducts();
-        }
-
-        window.addProduct = async () => {
-
-            const name = document.getElementById('name').value;
-            const price = document.getElementById('price').value;
-            const category = document.getElementById('category').value;
-
-            const file = document.getElementById('imageFile').files[0];
-
-            if (!name || !price || !file) {
-                alert("Tüm alanları doldur!");
-                return;
-            }
-
-            const storageRef = ref(storage, 'products/' + file.name);
-            await uploadBytes(storageRef, file);
-
-            const imageUrl = await getDownloadURL(storageRef);
-
-            await addDoc(collection(db, "products"), {
-                name,
-                price,
-                category,
-                image: imageUrl
-            });
-
-            document.getElementById('name').value = '';
-            document.getElementById('price').value = '';
-
-            loadProducts();
-        }
-
-        const storageRef = ref(storage, 'products/' + file.name);
-        await uploadBytes(storageRef, file);
-
-        const imageUrl = await getDownloadURL(storageRef);
-
-        if (!name || !price || !image) {
-            alert('Tüm alanları doldur');
-            return;
-        }
-
-        await addDoc(collection(db, "products"), {
-            name,
-            price,
-            category,
-            image: imageUrl
-        });
-        document.getElementById('name').value = '';
-        document.getElementById('price').value = '';
-        document.getElementById('image').value = '';
-
-        loadProducts();
-
-
-        loadProducts();
-    </script>
+    alert("Ürün eklendi!");
+}
+</script>
 
 </body>
-
 </html>
-```
